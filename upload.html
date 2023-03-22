@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MY APP</title>
+</head>
+
+<body>
+    <H1>Giới hạn file</H1>
+    <!--  SINGLE FILE -->
+    <form action="/upload" enctype="multipart/form-data" method="POST">
+        <input type="file" name="avatar" />
+        <input type="submit" value="upload" />
+    </form>
+
+
+    <br>
+    <hr>
+    <br>
+
+    <!-- MULTIPLE FILES -->
+<h1>Gửi nhiều file</h1>
+    <form action="/uploadmultiple" enctype="multipart/form-data" method="POST">
+        Chon file: <input type="file" name="myFiles" multiple>
+        <input type="submit" value="Upload your files" />
+    </form>
+
+    <br>
+    <hr>
+    <br>
+    <h1>Gửi Ảnh JPEG</h1>
+    <form action="/uploadfile" enctype="multipart/form-data" method="POST">
+        <input type="file" name="avatar" accept="image/JPEG" />
+        <input type="submit" value="Upload a file" />
+    </form>
+
+
+   
+</body>
+
+</html>
