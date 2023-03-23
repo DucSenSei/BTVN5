@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const port = 3030
 const bodyParser = require('body-parser')
 const multer = require('multer');
 const fs = require('fs');
@@ -39,14 +38,15 @@ var upload = multer({storage:storage,limits:{fileSize:1*1024*1024}});
 app.get('/',function(req,res){
     res.sendFile(__dirname + '/upload.html');
 });
-app.post('/upload',upload.single('avatar'),function(req,res){
-    const file = req.file
-    if (!file){
-        return res.send("File ko xác định hoặc file đã lớn hơn 1MB")   
-    }else{
-        
-        res.send('Thanh Cong');
-    }
+var upload = upload.single('avatar');
+app.post('/upload',function(req,res){
+    upload(req,res,function(err){
+        if(err  instanceof multer.MulterError){
+         return   res.end("file ko xác định hoặc file lớn hơn 1MB");
+        }
+        console.log(req.file);
+        res.send("Thành CÔng");
+    });
     
 });
 var uploads = multer({storage:storage});
@@ -57,7 +57,8 @@ app.post('/uploadmultiple', uploads.array('myFiles', 12), (req, res, next) => {
         error.httpStatusCode = 400
         return next(error)
     }
-    res.send(files)
+    console.log(req.file);
+    res.send("Thành Công");
 })
 app.post('/uploadfile', uploads.array('avatar', 12), (req, res, next) => {
     const files = req.files
@@ -66,8 +67,7 @@ app.post('/uploadfile', uploads.array('avatar', 12), (req, res, next) => {
         error.httpStatusCode = 400
         return next(error)
     }
-    res.send(files)
+    console.log(req.file);
+    res.send("Thành Công");
 })
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-});
+app.listen(8080);
